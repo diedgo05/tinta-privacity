@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliminar tu cuenta · Tinta</title>
+  <meta name="description" content="Cómo eliminar tu cuenta de Tinta y los datos asociados." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --olive: #2D4A2B;
+      --olive-light: #4A6B47;
+      --olive-soft: #E8EDE6;
+      --brown: #8B6F47;
+      --brown-soft: #F2EDE3;
+      --cream: #FAF7F0;
+      --cream-deep: #F4F0E5;
+      --ink: #1A1F1A;
+      --ink-soft: #4A524A;
+      --ink-mute: #7A827A;
+      --danger: #B23A2C;
+      --danger-soft: #FBEDEA;
+      --line: rgba(45, 74, 43, 0.08);
+      --line-strong: rgba(45, 74, 43, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* === HERO === */
+    .hero {
+      background: var(--olive);
+      color: var(--cream);
+      padding: 4rem 1.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(244, 240, 229, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(250, 247, 240, 0.7);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .hero .brand-dot {
+      width: 6px; height: 6px;
+      background: var(--brown);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .hero .lead {
+      font-size: 1.125rem;
+      color: rgba(250, 247, 240, 0.85);
+      max-width: 540px;
+      font-weight: 400;
+    }
+
+    /* === MAIN === */
+    main {
+      max-width: 760px;
+      margin: -3rem auto 0;
+      padding: 0 1.5rem 5rem;
+      position: relative;
+    }
+
+    /* === INTRO CARD === */
+    .intro-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(45, 74, 43, 0.05);
+      border: 1px solid var(--line);
+      margin-bottom: 3rem;
+    }
+    .intro-card p {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .intro-card p + p { margin-top: 0.75rem; }
+    .intro-card strong { color: var(--ink); font-weight: 600; }
+
+    /* === SECTION === */
+    section { margin-bottom: 3.5rem; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brown);
+      background: var(--brown-soft);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 600;
+      font-size: 1.75rem;
+      color: var(--olive);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .section-sub {
+      color: var(--ink-mute);
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+    }
+    h3 {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* === OPTION TOGGLE === */
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 600px) { .options { grid-template-columns: 1fr; } }
+    .option-pill {
+      background: #fff;
+      border: 1.5px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .option-pill.primary {
+      border-color: var(--olive);
+      background: var(--olive-soft);
+    }
+    .option-pill .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--olive);
+      margin-bottom: 0.5rem;
+    }
+    .option-pill h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .option-pill p {
+      font-size: 0.85rem;
+      color: var(--ink-mute);
+      margin: 0;
+    }
+
+    /* === STEPS === */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .step {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(45, 74, 43, 0.08);
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      background: var(--olive);
+      color: var(--cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Fraunces', serif;
+    }
+    .step-body h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--ink);
+    }
+    .step-body p {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* === EMAIL CTA === */
+    .email-cta {
+      background: linear-gradient(135deg, var(--olive) 0%, var(--olive-light) 100%);
+      color: var(--cream);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .email-cta .label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 240, 0.7);
+      margin-bottom: 0.75rem;
+    }
+    .email-cta a.email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--cream);
+      color: var(--olive);
+      padding: 0.875rem 1.75rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+    .email-cta a.email-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .email-cta .hint {
+      font-size: 0.85rem;
+      color: rgba(250, 247, 240, 0.75);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+    }
+    .email-cta .hint code {
+      background: rgba(250, 247, 240, 0.15);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-style: normal;
+    }
+    .email-note {
+      background: var(--brown-soft);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+    .email-note ul { margin-top: 0.5rem; padding-left: 1.25rem; }
+    .email-note li { margin-bottom: 0.25rem; }
+
+    /* === DATA TABLES === */
+    .data-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(45, 74, 43, 0.04);
+      margin-bottom: 1.5rem;
+    }
+    .data-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 1.5rem;
+      padding: 1rem 1.5rem;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.925rem;
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-row .dr-name { color: var(--ink); }
+    .data-row .dr-status {
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: var(--olive);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .data-row .dr-time {
+      font-size: 0.85rem;
+      color: var(--ink-mute);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      min-width: 110px;
+    }
+    .dr-check {
+      width: 16px; height: 16px;
+      background: var(--olive-soft);
+      color: var(--olive);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      .data-row {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+      .data-row .dr-time { text-align: left; }
+    }
+
+    /* === NOTE BLOCK === */
+    .note {
+      background: var(--brown-soft);
+      border-left: 3px solid var(--brown);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      font-size: 0.925rem;
+      color: var(--ink-soft);
+    }
+    .note strong { color: var(--ink); font-weight: 600; }
+
+    /* === WARNING === */
+    .warning {
+      background: var(--danger-soft);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .warning-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      background: var(--danger);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: 'Fraunces', serif;
+    }
+    .warning-body p {
+      color: var(--ink-soft);
+      font-size: 0.925rem;
+      margin: 0;
+    }
+    .warning-body strong { color: var(--danger); font-weight: 600; }
+
+    /* === FAQ === */
+    .faq {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(45, 74, 43, 0.04);
+    }
+    details {
+      border-bottom: 1px solid var(--line);
+    }
+    details:last-child { border-bottom: none; }
+    summary {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 0.975rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    summary:hover { background: var(--cream-deep); }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--brown);
+      transition: transform 0.2s;
+      line-height: 1;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    details > p {
+      padding: 0 1.5rem 1.25rem;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    /* === FOOTER CONTACT === */
+    .footer-contact {
+      background: var(--olive);
+      color: var(--cream);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .footer-contact h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .footer-contact p {
+      color: rgba(250, 247, 240, 0.75);
+      font-size: 0.925rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-contact a {
+      color: var(--cream);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(250, 247, 240, 0.4);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .footer-contact a:hover { border-color: var(--cream); }
+    .footer-contact .meta {
+      margin-top: 1.5rem;
+      font-size: 0.825rem;
+      color: rgba(250, 247, 240, 0.55);
+    }
+
+    footer.legal {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--ink-mute);
+      font-size: 0.825rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    footer.legal a {
+      color: var(--olive);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-strong);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        Tinta · Eliminación de cuenta
+      </div>
+      <h1>Eliminar tu cuenta</h1>
+      <p class="lead">
+        Respetamos tu derecho a eliminar tu cuenta y datos personales en cualquier momento.
+        Sin trámites largos, sin letra chica.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- INTRO CARD -->
+    <div class="intro-card">
+      <p>
+        En <strong>Tinta</strong> (aplicación desarrollada por el equipo Tinta de la
+        Universidad Politécnica de Chiapas) puedes solicitar la eliminación de tu cuenta
+        y todos los datos asociados conforme a la <strong>Ley Federal de Protección de Datos
+        Personales en Posesión de los Particulares (LFPDPPP)</strong> de México y la política
+        de Google Play.
+      </p>
+      <p>
+        Tienes dos formas de hacerlo: directamente desde la app o por correo electrónico.
+      </p>
+    </div>
+
+    <!-- COMO ELIMINAR -->
+    <section>
+      <div class="section-label">Cómo eliminar</div>
+      <h2>Dos formas, ambas gratuitas</h2>
+      <p class="section-sub">Elige la opción que prefieras. Recomendamos la primera.</p>
+
+      <div class="options">
+        <div class="option-pill primary">
+          <div class="badge">Recomendado</div>
+          <h4>Desde la app</h4>
+          <p>4 pasos, ~30 segundos</p>
+        </div>
+        <div class="option-pill">
+          <div class="badge" style="color: var(--brown);">Alternativa</div>
+          <h4>Por correo</h4>
+          <p>Respuesta en 5 días hábiles</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Opción A · Desde la aplicación</h3>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Abre la app Tinta</h4>
+            <p>Inicia sesión con tu correo y contraseña.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Ve a "Mi Perfil"</h4>
+            <p>Toca el ícono de perfil en la esquina superior derecha, o usa la pestaña "Cuenta" del menú inferior.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Toca "Configuración" → "Eliminar cuenta"</h4>
+            <p>El botón está al final del menú de configuración.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Confirma la acción</h4>
+            <p>Te pediremos confirmar tu contraseña por seguridad. Al confirmar, la cuenta queda marcada para eliminación inmediata.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2.5rem; margin-bottom: 1rem;">Opción B · Por correo electrónico</h3>
+
+      <div class="email-cta">
+        <div class="label">Escríbenos a</div>
+        <a class="email-btn" href="mailto:tinta.upch@gmail.com?subject=Solicitud%20de%20eliminaci%C3%B3n%20de%20cuenta&body=Hola%20equipo%20Tinta%2C%0A%0ASolicito%20la%20eliminaci%C3%B3n%20de%20mi%20cuenta%20y%20todos%20los%20datos%20asociados.%0A%0AMi%20correo%20de%20registro%20es%3A%20%5BTU%20CORREO%5D%0A%0AGracias.">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="m3 7 9 6 9-6"/>
+          </svg>
+          tinta.upch@gmail.com
+        </a>
+        <div class="hint">
+          Asunto sugerido: <code>Solicitud de eliminación de cuenta</code>
+        </div>
+      </div>
+
+      <div class="email-note">
+        <strong>En el correo, indica:</strong>
+        <ul>
+          <li>Tu correo de registro (debe ser el mismo desde el que escribes).</li>
+          <li>Nombre con el que te registraste <em>(opcional, para verificar identidad)</em>.</li>
+        </ul>
+      </div>
+
+      <p style="margin-top: 1.5rem; color: var(--ink-soft); font-size: 0.925rem;">
+        Responderemos en máximo <strong>5 días hábiles</strong> confirmando la eliminación.
+        El plazo legal de la LFPDPPP es de 20 días, pero solemos resolver mucho más rápido.
+      </p>
+    </section>
+
+    <!-- DATOS ELIMINADOS -->
+    <section>
+      <div class="section-label">Qué se elimina</div>
+      <h2>Datos eliminados al cerrar tu cuenta</h2>
+      <p class="section-sub">Borramos toda tu información personal de nuestros servidores.</p>
+
+      <div class="data-card">
+        <div class="data-row">
+          <div class="dr-name">Nombre, correo y contraseña</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Foto de perfil y avatar</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Selección de temas académicos</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Progreso de lectura</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Anotaciones y resaltados</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Mensajes en clubes de lectura</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Anonimizado</div>
+          <div class="dr-time">Hasta 30 días</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Membresías a clubes</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Recomendaciones de libros</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Sesiones activas (tokens)</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Notificaciones in-app</div>
+          <div class="dr-status"><span class="dr-check">✓</span>Eliminado</div>
+          <div class="dr-time">Inmediato</div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Sobre tus mensajes en clubes:</strong> para no romper hilos donde otros
+        participaron, anonimizamos tus mensajes (tu nombre se reemplaza por "Usuario eliminado"),
+        en lugar de borrarlos por completo. Si prefieres la eliminación total, indícalo en
+        tu solicitud y lo haremos.
+      </div>
+    </section>
+
+    <!-- DATOS RETENIDOS -->
+    <section>
+      <div class="section-label">Qué se conserva</div>
+      <h2>Datos retenidos temporalmente</h2>
+      <p class="section-sub">Por razones legales y de seguridad, algunos datos se conservan brevemente.</p>
+
+      <div class="data-card">
+        <div class="data-row">
+          <div class="dr-name">Registros de acceso (logs HTTP)</div>
+          <div class="dr-status" style="color: var(--brown);">Seguridad</div>
+          <div class="dr-time">30 días</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Respaldos cifrados (backups)</div>
+          <div class="dr-status" style="color: var(--brown);">Operativo</div>
+          <div class="dr-time">60 días</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Lista anti-reregistro</div>
+          <div class="dr-status" style="color: var(--brown);">Anti-fraude</div>
+          <div class="dr-time">90 días</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Datos por mandato legal</div>
+          <div class="dr-status" style="color: var(--brown);">Legal</div>
+          <div class="dr-time">Según ley</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; color: var(--ink-soft); font-size: 0.9rem;">
+        Después de estos plazos, los datos se eliminan automáticamente.
+        <strong>Ningún dato personal se conserva indefinidamente.</strong>
+      </p>
+    </section>
+
+    <!-- WARNING -->
+    <div class="warning">
+      <div class="warning-icon">!</div>
+      <div class="warning-body">
+        <p>
+          <strong>La eliminación es permanente e irreversible.</strong>
+          Una vez confirmada, no podrás recuperar tu progreso, anotaciones ni libros recomendados.
+          Si solo quieres dejar de usar la app temporalmente, cierra sesión sin eliminar la cuenta.
+        </p>
+      </div>
+    </div>
+
+    <!-- DATOS EN DISPOSITIVO -->
+    <section>
+      <div class="section-label">Datos locales</div>
+      <h2>Datos en tu dispositivo</h2>
+      <p class="section-sub">Tinta ejecuta la IA localmente. Estos datos viven solo en tu teléfono.</p>
+
+      <div class="data-card">
+        <div class="data-row">
+          <div class="dr-name">Modelo Qwen 2.5 1.5B descargado (~1 GB)</div>
+          <div class="dr-status" style="color: var(--brown);">Local</div>
+          <div class="dr-time">Al desinstalar</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Fragmentos de la base de conocimientos</div>
+          <div class="dr-status" style="color: var(--brown);">Local</div>
+          <div class="dr-time">Al desinstalar</div>
+        </div>
+        <div class="data-row">
+          <div class="dr-name">Historial de conversaciones con el tutor IA</div>
+          <div class="dr-status" style="color: var(--brown);">Local</div>
+          <div class="dr-time">Al desinstalar</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; color: var(--ink-soft); font-size: 0.9rem;">
+        Estas conversaciones <strong>nunca llegaron a nuestros servidores</strong>.
+        Para borrarlas, simplemente desinstala la app desde la configuración de Android.
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+      <div class="section-label">Preguntas frecuentes</div>
+      <h2>Dudas comunes</h2>
+      <p class="section-sub">Lo que la gente nos pregunta antes de eliminar su cuenta.</p>
+
+      <div class="faq">
+        <details>
+          <summary>¿Puedo recuperar mi cuenta si me arrepiento?</summary>
+          <p>No. Una vez procesada la eliminación, la cuenta no puede restaurarse. Tendrías que registrarte de nuevo como usuario nuevo, sin tu historial anterior.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tiempo tarda en eliminarse mi cuenta?</summary>
+          <p>La cuenta deja de ser accesible <strong>inmediatamente</strong>. Los datos asociados se eliminan completamente en máximo <strong>30 días</strong> (incluidos backups).</p>
+        </details>
+        <details>
+          <summary>¿Pueden eliminar solo algunos datos en vez de toda la cuenta?</summary>
+          <p>Sí. Si quieres conservar tu cuenta pero borrar datos específicos (por ejemplo, todas tus anotaciones), escríbenos al correo indicando qué tipo de datos quieres eliminar.</p>
+        </details>
+        <details>
+          <summary>¿La eliminación tiene costo?</summary>
+          <p>No. La eliminación de cuenta es completamente gratuita, conforme a la LFPDPPP.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <div class="footer-contact">
+      <h3>¿Tienes dudas?</h3>
+      <p>Estamos aquí para ayudarte. Escríbenos y respondemos en máximo 20 días hábiles.</p>
+      <a href="mailto:tinta.upch@gmail.com">tinta.upch@gmail.com</a>
+      <div class="meta">Universidad Politécnica de Chiapas · Tuxtla Gutiérrez, México</div>
+    </div>
+
+  </main>
+
+  <footer class="legal">
+    <p>© 2026 Equipo Tinta · Universidad Politécnica de Chiapas</p>
+    <p style="margin-top: 0.25rem;">Última actualización: 27 de junio de 2026 · <a href="/">Política de Privacidad</a></p>
+  </footer>
+
+</body>
+</html>
